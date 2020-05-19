@@ -6,7 +6,7 @@ const CreateToDoScreen = (props) => {
   const { navigation } = props;
 
   return (
-    <View>
+    <View style={styles.centeredScreen}>
       <Text>CreateToDoScreen</Text>
     </View>
   );

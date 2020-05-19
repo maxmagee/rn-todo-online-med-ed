@@ -10,7 +10,7 @@ const ActiveToDoListScreen = (props) => {
   };
 
   return (
-    <View>
+    <View style={styles.centeredScreen}>
       <Text>ActiveToDoListScreen</Text>
       <Button title="Go to create screen" onPress={handleNavigation.bind(null, "CreateToDo", {})} />
       <Button title="Go to edit screen" onPress={handleNavigation.bind(null, "EditToDo", {})} />

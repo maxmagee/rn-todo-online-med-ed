@@ -1,19 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 const CompletedToDoListScreen = (props) => {
   const { navigation } = props;
 
-  const handleNavigation = (routeName, params) => {
-    navigation.navigate(routeName, params);
-  };
-
   return (
-    <View>
+    <View style={styles.centeredScreen}>
       <Text>CompletedToDoListScreen</Text>
-      <Button title="Go to create screen" onPress={handleNavigation.bind(null, "CreateToDo", {})} />
-      <Button title="Go to edit screen" onPress={handleNavigation.bind(null, "EditToDo", {})} />
     </View>
   );
 };
