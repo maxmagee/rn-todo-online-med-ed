@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, View } from "react-native";
+import { useForm } from "react-hook-form";
 
 import CallToActionButton from "../components/ui/CallToActionButton";
 import CustomTextInput from "../components/ui/CustomTextInput";
@@ -10,16 +11,35 @@ import colors from "../constants/colors";
 const CreateToDoScreen = (props) => {
   const { navigation } = props;
 
-  const onSubmitHandler = () => {
-    console.log("submit pressed");
+  const { register, handleSubmit, setValue } = useForm();
+
+  useEffect(() => {
+    register("name");
+    register("description");
+  }, [register]);
+
+  const onSubmitHandler = (data) => {
+    console.log(data);
   };
 
   return (
     <View style={styles.centeredScreen}>
-      <CustomTextInput label="Name" />
-      <CustomTextInput label="Description" style={styles.textArea} multiline />
+      <CustomTextInput
+        label="Name"
+        onChangeText={(text) => {
+          setValue("name", text);
+        }}
+      />
+      <CustomTextInput
+        label="Description"
+        style={styles.textArea}
+        multiline
+        onChangeText={(text) => {
+          setValue("description", text);
+        }}
+      />
       <View style={styles.buttonContainer}>
-        <CallToActionButton label="Submit" onPress={onSubmitHandler} />
+        <CallToActionButton label="Submit" onPress={handleSubmit(onSubmitHandler)} />
       </View>
     </View>
   );
