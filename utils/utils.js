@@ -7,6 +7,15 @@ const getRandomDate = () => {
   return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 };
 
+/**
+ * Returns a "unique" string id
+ */
+const getUniqueId = () => {
+  const now = new Date();
+  return now.getTime().toString();
+};
+
 export default {
   getRandomDate,
+  getUniqueId,
 };

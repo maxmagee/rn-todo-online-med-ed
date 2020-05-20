@@ -1,4 +1,5 @@
 export const COMPLETE_TASK = "COMPLETE_TASK";
+export const CREATE_TASK = "CREATE_TASK";
 export const REACTIVATE_TASK = "REACTIVATE_TASK";
 
 /**
@@ -9,6 +10,15 @@ export const completeTask = (task) => {
   return {
     task,
     type: COMPLETE_TASK,
+  };
+};
+
+export const createTask = (name, description, dueDate) => {
+  return {
+    taskDescription: description,
+    taskDueDate: dueDate,
+    taskName: name,
+    type: CREATE_TASK,
   };
 };
 
