@@ -1,28 +1,43 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, StyleSheet, View, StatusBar } from "react-native";
+import { FlatList, SafeAreaView, StyleSheet, View, StatusBar } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DrawerActions } from "react-navigation-drawer";
 
 import CustomHeaderButton from "../components/ui/CustomHeaderButton";
 import DefaultText from "../components/ui/DefaultText";
+import TaskListItem from "../components/task/TaskListItem";
 
 import colors from "../constants/colors";
+import TASKS from "../data/dummy-data";
+
+const activeTasks = TASKS; // TASKS.filter((task) => task.isActive);
 
 const ActiveToDoListScreen = (props) => {
   const { navigation } = props;
 
-  const handleNavigation = (routeName, params) => {
-    navigation.navigate(routeName, params);
+  const renderTaskListItem = (itemData) => {
+    return <TaskListItem task={itemData.item} />;
   };
 
+  if (activeTasks === undefined || activeTasks.length === 0) {
+    return (
+      <View style={styles.centeredScreen}>
+        <DefaultText style={{ fontSize: 16 }}>No Active Tasks Found</DefaultText>
+      </View>
+    );
+  }
+
   return (
-    <View style={styles.centeredScreen}>
+    <SafeAreaView style={styles.fullScreen}>
       <StatusBar barStyle="light-content" backgroundColor={colors.dark.systemGray5} />
-      <DefaultText>Active Tasks</DefaultText>
-      <Button title="Go to create screen" onPress={handleNavigation.bind(null, "CreateToDo", {})} />
-      <Button title="Go to edit screen" onPress={handleNavigation.bind(null, "EditToDo", {})} />
-    </View>
+      <FlatList
+        style={styles.list}
+        data={activeTasks}
+        keyExtractor={(item) => item.id}
+        renderItem={renderTaskListItem}
+      />
+    </SafeAreaView>
   );
 };
 
@@ -67,6 +82,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark.systemGray6,
     flex: 1,
     justifyContent: "center",
+  },
+  fullScreen: {
+    backgroundColor: colors.dark.systemGray6,
+    flex: 1,
+  },
+  list: {
+    backgroundColor: colors.dark.systemGray6,
+    flex: 1,
+    paddingVertical: 0,
+    width: "100%",
   },
 });
 
