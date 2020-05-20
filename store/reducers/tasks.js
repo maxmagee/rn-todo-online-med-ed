@@ -1,4 +1,5 @@
-import { COMPLETE_TASK, REACTIVATE_TASK } from "../actions/tasks";
+import { COMPLETE_TASK, CREATE_TASK, REACTIVATE_TASK } from "../actions/tasks";
+import Task from "../../models/task";
 import TASKS from "../../data/dummy-data";
 
 const initialState = {
@@ -19,6 +20,15 @@ export default (state = initialState, action) => {
         ...state,
         activeTasks: updatedActiveTasks,
         completedTasks: state.completedTasks.concat(completedTask),
+      };
+    }
+    case CREATE_TASK: {
+      const { taskName, taskDescription, taskDueDate } = action;
+      const newTask = Task.create(taskName, taskDescription, taskDueDate);
+
+      return {
+        ...state,
+        activeTasks: state.activeTasks.concat(newTask),
       };
     }
     case REACTIVATE_TASK: {

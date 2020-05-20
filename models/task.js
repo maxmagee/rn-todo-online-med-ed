@@ -1,3 +1,6 @@
+import expoConstants from "expo-constants";
+import utils from "../utils/utils";
+
 const moment = require("moment");
 
 class Task {
@@ -9,6 +12,18 @@ class Task {
     this.dueDate = dueDate;
     this.isActive = isActive;
     this.dateCompleted = dateCompleted;
+  }
+
+  static create(name, description, dueDate) {
+    return new Task(
+      utils.getUniqueId(),
+      expoConstants.installationId,
+      name,
+      description,
+      dueDate,
+      true,
+      null
+    );
   }
 
   get displayDateCompleted() {
