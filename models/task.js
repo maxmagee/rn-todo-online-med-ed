@@ -12,7 +12,7 @@ class Task {
 
   get displayDate() {
     // ex: Tuesday May 19 2020
-    return moment(this.date).format("dddd LL");
+    return moment(this.date).format("ddd LL");
   }
 }
 
