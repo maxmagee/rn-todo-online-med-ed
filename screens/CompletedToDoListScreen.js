@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, Text, View } from "react-native";
+import { DrawerActions } from "react-navigation-drawer";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+
+import CustomHeaderButton from "../components/ui/CustomHeaderButton";
 
 const CompletedToDoListScreen = (props) => {
   const { navigation } = props;
@@ -18,6 +22,23 @@ CompletedToDoListScreen.propTypes = {
   }).isRequired,
 };
 CompletedToDoListScreen.defaultProps = {};
+
+CompletedToDoListScreen.navigationOptions = (navigationData) => {
+  const openDrawerHandler = () => {
+    navigationData.navigation.dispatch(DrawerActions.openDrawer());
+  };
+
+  return {
+    headerLeft: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item iconName="ios-menu" onPress={openDrawerHandler} title="Menu" />
+        </HeaderButtons>
+      );
+    },
+    headerTitle: "Completed Tasks",
+  };
+};
 
 const styles = StyleSheet.create({
   centeredScreen: {
