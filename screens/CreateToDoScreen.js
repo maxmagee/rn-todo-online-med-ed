@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Button, StyleSheet, View } from "react-native";
+import { Button, Keyboard, ScrollView, StyleSheet, View } from "react-native";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import CallToActionButton from "../components/ui/CallToActionButton";
 import CustomTextInput from "../components/ui/CustomTextInput";
 
@@ -49,41 +50,45 @@ const CreateToDoScreen = (props) => {
   };
 
   return (
-    <View style={styles.centeredScreen}>
-      <CustomTextInput
-        label="Name"
-        onChangeText={(text) => {
-          setValue("name", text);
-        }}
-      />
-      <CustomTextInput
-        label="Description"
-        style={styles.textArea}
-        multiline
-        onChangeText={(text) => {
-          setValue("description", text);
-        }}
-      />
-      <CustomTextInput
-        onFocus={showDatePicker}
-        label="Due Date"
-        editable={false}
-        value={moment(dueDate).format("ddd LL")}
-      />
-      <View>
-        <Button color={colors.dark.blue} title="Change Due Date" onPress={showDatePicker} />
-        <DateTimePickerModal
-          mode="date"
-          minimumDate={today}
-          isVisible={isDatePickerVisible}
-          onConfirm={dateConfirmedHandler}
-          onCancel={hideDatePicker}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
-        <CallToActionButton label="Submit" onPress={handleSubmit(onSubmitHandler)} />
-      </View>
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <ScrollView style={styles.scrollView}>
+        <View behavior="height" style={styles.centeredScreen}>
+          <CustomTextInput
+            label="Name"
+            onChangeText={(text) => {
+              setValue("name", text);
+            }}
+          />
+          <CustomTextInput
+            label="Description"
+            style={styles.textArea}
+            multiline
+            onChangeText={(text) => {
+              setValue("description", text);
+            }}
+          />
+          <CustomTextInput
+            onFocus={showDatePicker}
+            label="Due Date"
+            editable={false}
+            value={moment(dueDate).format("ddd LL")}
+          />
+          <View>
+            <Button color={colors.dark.blue} title="Change Due Date" onPress={showDatePicker} />
+            <DateTimePickerModal
+              mode="date"
+              minimumDate={today}
+              isVisible={isDatePickerVisible}
+              onConfirm={dateConfirmedHandler}
+              onCancel={hideDatePicker}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <CallToActionButton label="Submit" onPress={handleSubmit(onSubmitHandler)} />
+          </View>
+        </View>
+      </ScrollView>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -108,7 +113,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.dark.systemGray6,
     flex: 1,
     justifyContent: "flex-start",
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  scrollView: {
+    backgroundColor: colors.dark.systemGray6,
+    height: "100%",
   },
   textArea: {
     height: 80,
