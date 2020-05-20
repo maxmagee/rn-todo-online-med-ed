@@ -1,17 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { DrawerActions } from "react-navigation-drawer";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import CustomHeaderButton from "../components/ui/CustomHeaderButton";
+import DefaultText from "../components/ui/DefaultText";
+
+import colors from "../constants/colors";
 
 const CompletedToDoListScreen = (props) => {
   const { navigation } = props;
 
   return (
     <View style={styles.centeredScreen}>
-      <Text>CompletedToDoListScreen</Text>
+      <DefaultText>Completed Tasks</DefaultText>
     </View>
   );
 };
@@ -43,6 +46,7 @@ CompletedToDoListScreen.navigationOptions = (navigationData) => {
 const styles = StyleSheet.create({
   centeredScreen: {
     alignItems: "center",
+    backgroundColor: colors.dark.systemGray6,
     flex: 1,
     justifyContent: "center",
   },

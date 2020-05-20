@@ -1,9 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, View, StatusBar } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DrawerActions } from "react-navigation-drawer";
+
 import CustomHeaderButton from "../components/ui/CustomHeaderButton";
+import DefaultText from "../components/ui/DefaultText";
+
+import colors from "../constants/colors";
 
 const ActiveToDoListScreen = (props) => {
   const { navigation } = props;
@@ -14,7 +18,8 @@ const ActiveToDoListScreen = (props) => {
 
   return (
     <View style={styles.centeredScreen}>
-      <Text>ActiveToDoListScreen</Text>
+      <StatusBar barStyle="light-content" backgroundColor={colors.dark.systemGray5} />
+      <DefaultText>Active Tasks</DefaultText>
       <Button title="Go to create screen" onPress={handleNavigation.bind(null, "CreateToDo", {})} />
       <Button title="Go to edit screen" onPress={handleNavigation.bind(null, "EditToDo", {})} />
     </View>
@@ -59,6 +64,7 @@ ActiveToDoListScreen.navigationOptions = (navigationData) => {
 const styles = StyleSheet.create({
   centeredScreen: {
     alignItems: "center",
+    backgroundColor: colors.dark.systemGray6,
     flex: 1,
     justifyContent: "center",
   },

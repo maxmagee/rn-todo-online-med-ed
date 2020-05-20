@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { StyleSheet, Text } from "react-native";
+import colors from "../../constants/colors";
 
 const DefaultText = (props) => {
   const { children, style } = props;
@@ -19,6 +20,7 @@ DefaultText.defaultProps = {
 
 const styles = StyleSheet.create({
   text: {
+    color: colors.dark.lightGray,
     fontFamily: "open-sans",
   },
 });

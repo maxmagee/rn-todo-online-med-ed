@@ -6,7 +6,7 @@ import colors from "../../constants/colors";
 
 const CustomHeaderButton = (props) => {
   return (
-    <HeaderButton {...props} IconComponent={Ionicons} iconSize={23} color={colors.dark.blue} />
+    <HeaderButton {...props} IconComponent={Ionicons} iconSize={23} color={colors.dark.lightGray} />
   );
 };
 

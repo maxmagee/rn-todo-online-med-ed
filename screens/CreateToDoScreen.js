@@ -1,13 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+
+import DefaultText from "../components/ui/DefaultText";
+
+import colors from "../constants/colors";
 
 const CreateToDoScreen = (props) => {
   const { navigation } = props;
 
   return (
     <View style={styles.centeredScreen}>
-      <Text>CreateToDoScreen</Text>
+      <DefaultText>Create ToDo</DefaultText>
     </View>
   );
 };
@@ -22,6 +26,7 @@ CreateToDoScreen.defaultProps = {};
 const styles = StyleSheet.create({
   centeredScreen: {
     alignItems: "center",
+    backgroundColor: colors.dark.systemGray6,
     flex: 1,
     justifyContent: "center",
   },
