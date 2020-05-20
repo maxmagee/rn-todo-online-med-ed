@@ -11,7 +11,7 @@ import TaskListItem from "../components/task/TaskListItem";
 import colors from "../constants/colors";
 import TASKS from "../data/dummy-data";
 
-const activeTasks = TASKS; // TASKS.filter((task) => task.isActive);
+const activeTasks = TASKS.filter((task) => task.isActive);
 
 const ActiveToDoListScreen = (props) => {
   const { navigation } = props;
