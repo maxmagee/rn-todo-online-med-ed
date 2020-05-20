@@ -16,7 +16,7 @@ const TaskListItem = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.checkBoxContainer}>
-        <CircleCheckBox isChecked={task.isActive} onPress={handleCheckBoxPressed} />
+        <CircleCheckBox isChecked={!task.isActive} onPress={handleCheckBoxPressed} />
       </View>
       <View style={styles.detailsContainer}>
         <View style={styles.row}>
