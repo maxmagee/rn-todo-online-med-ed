@@ -7,7 +7,21 @@ import CompletedToDoListScreen from "../screens/CompletedToDoListScreen";
 import CreateToDoScreen from "../screens/CreateToDoScreen";
 import EditToDoScreen from "../screens/EditToDoScreen";
 
-const defaultNavigationOptions = {};
+import colors from "../constants/colors";
+
+const defaultNavigationOptions = {
+  headerBackTitleStyle: {
+    fontFamily: "open-sans",
+  },
+  headerStyle: {
+    backgroundColor: colors.dark.systemGray5,
+    shadowColor: "transparent",
+  },
+  headerTintColor: colors.dark.lightGray,
+  headerTitleStyle: {
+    fontFamily: "open-sans-bold",
+  },
+};
 
 const ActiveToDosNavigator = createStackNavigator(
   {
@@ -37,6 +51,10 @@ const RootNavigator = createDrawerNavigator(
     Completed: CompletedToDosNavigator,
   },
   {
+    contentOptions: {
+      activeTintColor: colors.dark.lightGray,
+    },
+    drawerBackgroundColor: colors.dark.systemGray5,
     initialRouteName: "Active",
     order: ["Active", "Completed"],
   }

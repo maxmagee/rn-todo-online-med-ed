@@ -4,6 +4,7 @@ export default {
     gray: "rgb(152, 152, 157)",
     green: "rgb(48, 209, 88)",
     indigo: "rgb(94, 92, 230)",
+    lightGray: "rgb(200,200,200)",
     orange: "rgb(255, 159, 10)",
     pink: "rgb(255, 55, 95)",
     purple: "rgb(191, 90, 242)",
