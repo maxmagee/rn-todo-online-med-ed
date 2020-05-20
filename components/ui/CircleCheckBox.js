@@ -11,7 +11,12 @@ const CircleCheckBox = (props) => {
   const renderCheckBoxState = () => {
     if (isChecked) {
       return (
-        <Ionicons name="ios-checkmark-circle-outline" size={25} color={colors.dark.lightGray} />
+        <Ionicons
+          style={{ paddingTop: 2 }}
+          name="ios-checkmark-circle-outline"
+          size={25}
+          color={colors.dark.lightGray}
+        />
       );
     }
     return <View style={styles.container} />;
