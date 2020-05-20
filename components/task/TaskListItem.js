@@ -6,33 +6,52 @@ import DefaultText from "../ui/DefaultText";
 import CircleCheckBox from "../ui/CircleCheckBox";
 import colors from "../../constants/colors";
 
-const TaskListItem = (props) => {
-  const { task } = props;
+const moment = require("moment");
 
-  const handleCheckBoxPressed = () => {
-    console.log(`pressed ${task.id}`);
+const TaskListItem = (props) => {
+  const { onCheckBoxPressed, task } = props;
+
+  const renderDate = () => {
+    if (task.isActive) {
+      const dateTextStyle = {};
+      if (!moment().isBefore(task.dueDate)) {
+        dateTextStyle.color = colors.dark.red;
+      }
+
+      return (
+        <View style={styles.row}>
+          <DefaultText style={{ ...styles.dateText, ...dateTextStyle }}>
+            {task.displayDueDate}
+          </DefaultText>
+        </View>
+      );
+    }
+    return (
+      <View style={styles.row}>
+        <DefaultText style={styles.dateText}>Completed: {task.displayDateCompleted}</DefaultText>
+      </View>
+    );
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.checkBoxContainer}>
-        <CircleCheckBox isChecked={!task.isActive} onPress={handleCheckBoxPressed} />
-      </View>
+      <CircleCheckBox isChecked={!task.isActive} onPress={onCheckBoxPressed} />
       <View style={styles.detailsContainer}>
         <View style={styles.row}>
           <DefaultText style={styles.nameText}>{task.name}</DefaultText>
         </View>
-        <View style={styles.row}>
-          <DefaultText style={styles.dateText}>{task.displayDate}</DefaultText>
-        </View>
+        {renderDate()}
       </View>
     </View>
   );
 };
 
 TaskListItem.propTypes = {
+  onCheckBoxPressed: PropTypes.func.isRequired,
   task: PropTypes.shape({
-    displayDate: PropTypes.string.isRequired,
+    displayDateCompleted: PropTypes.string,
+    displayDueDate: PropTypes.string.isRequired,
+    dueDate: PropTypes.instanceOf(Date),
     id: PropTypes.string.isRequired,
     isActive: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
@@ -41,12 +60,8 @@ TaskListItem.propTypes = {
 TaskListItem.defaultProps = {};
 
 const styles = StyleSheet.create({
-  checkBoxContainer: {
-    // backgroundColor: "yellow",
-  },
   container: {
     alignItems: "center",
-    // backgroundColor: "red",
     borderBottomColor: colors.dark.systemGray3,
     borderBottomWidth: 1,
     flexDirection: "row",
@@ -58,7 +73,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   detailsContainer: {
-    // backgroundColor: "green",
     flex: 1,
     justifyContent: "space-around",
     paddingLeft: 10,
