@@ -1,4 +1,5 @@
 import Task from "../models/task";
+import utils from "../utils/utils";
 
 const TASKS = [
   new Task(
@@ -6,7 +7,7 @@ const TASKS = [
     "u1",
     "Wash the dishes",
     "The sink is full of dishes, clean them.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -14,7 +15,7 @@ const TASKS = [
     "u1",
     "Take out the trash",
     "Garbage collection is tomorrow morning.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -22,7 +23,7 @@ const TASKS = [
     "u1",
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
-    new Date(),
+    utils.getRandomDate(),
     false
   ),
   //
@@ -31,7 +32,7 @@ const TASKS = [
     "u1",
     "Wash the dishes",
     "The sink is full of dishes, clean them.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -39,7 +40,7 @@ const TASKS = [
     "u1",
     "Take out the trash",
     "Garbage collection is tomorrow morning.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -47,7 +48,7 @@ const TASKS = [
     "u1",
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
-    new Date(),
+    utils.getRandomDate(),
     false
   ),
   new Task(
@@ -55,7 +56,7 @@ const TASKS = [
     "u1",
     "Wash the dishes",
     "The sink is full of dishes, clean them.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -63,7 +64,7 @@ const TASKS = [
     "u1",
     "Take out the trash",
     "Garbage collection is tomorrow morning.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -71,7 +72,7 @@ const TASKS = [
     "u1",
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
-    new Date(),
+    utils.getRandomDate(),
     false
   ),
   new Task(
@@ -79,7 +80,7 @@ const TASKS = [
     "u1",
     "Wash the dishes",
     "The sink is full of dishes, clean them.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -87,7 +88,7 @@ const TASKS = [
     "u1",
     "Take out the trash",
     "Garbage collection is tomorrow morning.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -95,7 +96,7 @@ const TASKS = [
     "u1",
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
-    new Date(),
+    utils.getRandomDate(),
     false
   ),
   new Task(
@@ -103,7 +104,7 @@ const TASKS = [
     "u1",
     "Wash the dishes",
     "The sink is full of dishes, clean them.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -111,7 +112,7 @@ const TASKS = [
     "u1",
     "Take out the trash",
     "Garbage collection is tomorrow morning.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -119,7 +120,7 @@ const TASKS = [
     "u1",
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
-    new Date(),
+    utils.getRandomDate(),
     false
   ),
   new Task(
@@ -127,7 +128,7 @@ const TASKS = [
     "u1",
     "Wash the dishes",
     "The sink is full of dishes, clean them.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -135,7 +136,7 @@ const TASKS = [
     "u1",
     "Take out the trash",
     "Garbage collection is tomorrow morning.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -143,7 +144,7 @@ const TASKS = [
     "u1",
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
-    new Date(),
+    utils.getRandomDate(),
     false
   ),
   new Task(
@@ -151,7 +152,7 @@ const TASKS = [
     "u1",
     "Wash the dishes",
     "The sink is full of dishes, clean them.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -159,7 +160,7 @@ const TASKS = [
     "u1",
     "Take out the trash",
     "Garbage collection is tomorrow morning.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -167,7 +168,7 @@ const TASKS = [
     "u1",
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
-    new Date(),
+    utils.getRandomDate(),
     false
   ),
   new Task(
@@ -175,7 +176,7 @@ const TASKS = [
     "u1",
     "Wash the dishes",
     "The sink is full of dishes, clean them.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -183,7 +184,7 @@ const TASKS = [
     "u1",
     "Take out the trash",
     "Garbage collection is tomorrow morning.",
-    new Date(),
+    utils.getRandomDate(),
     true
   ),
   new Task(
@@ -191,7 +192,7 @@ const TASKS = [
     "u1",
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
-    new Date(),
+    utils.getRandomDate(),
     false
   ),
 ];

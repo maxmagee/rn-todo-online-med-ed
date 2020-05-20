@@ -3,21 +3,31 @@ import PropTypes from "prop-types";
 import { FlatList, SafeAreaView, StyleSheet, View } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DrawerActions } from "react-navigation-drawer";
+import { useDispatch, useSelector } from "react-redux";
 
 import CustomHeaderButton from "../components/ui/CustomHeaderButton";
 import DefaultText from "../components/ui/DefaultText";
 import TaskListItem from "../components/task/TaskListItem";
 
 import colors from "../constants/colors";
-import TASKS from "../data/dummy-data";
-
-const completedTasks = TASKS.filter((task) => !task.isActive);
+import * as taskActions from "../store/actions/tasks";
 
 const CompletedToDoListScreen = (props) => {
   const { navigation } = props;
+  const completedTasks = useSelector((state) => state.tasks.completedTasks);
+  const dispatch = useDispatch();
+
+  const reactivateTaskHandler = (task) => {
+    dispatch(taskActions.reactivateTask(task));
+  };
 
   const renderTaskListItem = (itemData) => {
-    return <TaskListItem task={itemData.item} />;
+    return (
+      <TaskListItem
+        task={itemData.item}
+        onCheckBoxPressed={reactivateTaskHandler.bind(null, itemData.item)}
+      />
+    );
   };
 
   if (completedTasks === undefined || completedTasks.length === 0) {
