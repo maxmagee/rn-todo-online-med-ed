@@ -39,7 +39,7 @@ const CreateToDoScreen = (props) => {
 
   const dateConfirmedHandler = (date) => {
     setDueDate(date);
-    setValue("dueDate", date.toString());
+    setValue("dueDate", date);
     hideDatePicker();
   };
 
