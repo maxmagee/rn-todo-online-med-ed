@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Button, Keyboard, ScrollView, StyleSheet, View } from "react-native";
+import { Alert, Button, Keyboard, ScrollView, StyleSheet, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
@@ -46,6 +46,23 @@ const EditToDoScreen = (props) => {
     navigation.goBack();
   };
 
+  const onDeleteHandler = () => {
+    Alert.alert("Delete Task", "Are you sure you want to delete this task?", [
+      {
+        style: "cancel",
+        text: "Cancel",
+      },
+      {
+        onPress: () => {
+          dispatch(taskActions.deleteTask(task));
+          navigation.goBack();
+        },
+        style: "destructive",
+        text: "Delete",
+      },
+    ]);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <ScrollView style={styles.scrollView}>
@@ -83,7 +100,8 @@ const EditToDoScreen = (props) => {
             />
           </View>
           <View style={styles.buttonContainer}>
-            <CallToActionButton label="Submit" onPress={handleSubmit(onSubmitHandler)} />
+            <CallToActionButton label="Save" onPress={handleSubmit(onSubmitHandler)} />
+            <CallToActionButton isDestructive label="Delete" onPress={onDeleteHandler} />
           </View>
         </View>
       </ScrollView>
@@ -105,6 +123,8 @@ EditToDoScreen.navigationOptions = {
 
 const styles = StyleSheet.create({
   buttonContainer: {
+    height: 120,
+    justifyContent: "space-between",
     marginTop: 20,
     width: "100%",
   },
