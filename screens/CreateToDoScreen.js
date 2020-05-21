@@ -12,6 +12,8 @@ import DefaultText from "../components/ui/DefaultText";
 
 import colors from "../constants/colors";
 import * as taskActions from "../store/actions/tasks";
+import PriorityButton from "../components/task/PriorityButton";
+import types from "../constants/types";
 
 const moment = require("moment");
 
@@ -20,6 +22,9 @@ const today = new Date();
 const CreateToDoScreen = (props) => {
   const { navigation } = props;
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+  const [isLowPriority, setIsLowPriority] = useState(false);
+  const [isMedPriority, setIsMedPriority] = useState(false);
+  const [isHighPriority, setIsHighPriority] = useState(false);
   const [dueDate, setDueDate] = useState(today);
   const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
   const dispatch = useDispatch();
@@ -52,6 +57,37 @@ const CreateToDoScreen = (props) => {
     dispatch(taskActions.createTask(trimmedName, trimmedDescription, dueDate || today));
     dispatch(taskActions.sortTasks(lastActiveListSortType, true));
     navigation.goBack();
+  };
+
+  const switchPriorityHandler = (priorityKey) => {
+    switch (priorityKey) {
+      case types.priority.keys.low: {
+        setIsLowPriority((prevIsLowPriority) => {
+          return !prevIsLowPriority;
+        });
+        setIsMedPriority(false);
+        setIsHighPriority(false);
+        break;
+      }
+      case types.priority.keys.medium: {
+        setIsMedPriority((prevIsMedPriority) => {
+          return !prevIsMedPriority;
+        });
+        setIsLowPriority(false);
+        setIsHighPriority(false);
+        break;
+      }
+      case types.priority.keys.high: {
+        setIsHighPriority((prevIsHighPriority) => {
+          return !prevIsHighPriority;
+        });
+        setIsLowPriority(false);
+        setIsMedPriority(false);
+        break;
+      }
+      default:
+        break;
+    }
   };
 
   return (
@@ -94,6 +130,23 @@ const CreateToDoScreen = (props) => {
               onCancel={hideDatePicker}
             />
           </View>
+          <View style={styles.prioritiesContainer}>
+            <PriorityButton
+              isActive={isLowPriority}
+              priority={types.priority.low}
+              onPress={switchPriorityHandler.bind(null, types.priority.keys.low)}
+            />
+            <PriorityButton
+              isActive={isMedPriority}
+              priority={types.priority.medium}
+              onPress={switchPriorityHandler.bind(null, types.priority.keys.medium)}
+            />
+            <PriorityButton
+              isActive={isHighPriority}
+              priority={types.priority.high}
+              onPress={switchPriorityHandler.bind(null, types.priority.keys.high)}
+            />
+          </View>
           <View style={styles.buttonContainer}>
             <CallToActionButton label="Submit" onPress={handleSubmit(onSubmitHandler)} />
           </View>
@@ -132,6 +185,13 @@ const styles = StyleSheet.create({
   },
   errorTextContainer: {
     paddingTop: 5,
+  },
+  prioritiesContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingTop: 10,
+    width: "100%",
   },
   scrollView: {
     backgroundColor: colors.dark.systemGray6,
