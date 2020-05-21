@@ -68,9 +68,9 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.dark.systemGray3,
     borderBottomWidth: 1,
     flexDirection: "row",
-    height: 60,
     justifyContent: "center",
-    paddingLeft: 10,
+    minHeight: 60,
+    padding: 10,
   },
   dateText: {
     fontSize: 13,
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
   nameText: {
     fontSize: 17,
   },
+  row: {},
 });
 
 export default TaskListItem;
