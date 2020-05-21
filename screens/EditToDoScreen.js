@@ -100,7 +100,7 @@ EditToDoScreen.propTypes = {
 EditToDoScreen.defaultProps = {};
 
 EditToDoScreen.navigationOptions = {
-  headerTitle: "Create",
+  headerTitle: "Edit",
 };
 
 const styles = StyleSheet.create({
