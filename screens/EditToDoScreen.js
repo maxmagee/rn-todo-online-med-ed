@@ -42,7 +42,11 @@ const EditToDoScreen = (props) => {
   };
 
   const onSubmitHandler = (data) => {
-    dispatch(taskActions.createTask(data.name, data.description, dueDate));
+    task.description = data.description;
+    task.dueDate = dueDate;
+    task.name = data.name;
+
+    dispatch(taskActions.editTask(task));
     navigation.goBack();
   };
 
