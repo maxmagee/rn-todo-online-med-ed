@@ -21,11 +21,14 @@ const CompletedToDoListScreen = (props) => {
     dispatch(taskActions.reactivateTask(task));
   };
 
+  const detailsPressedHandler = (task) => {};
+
   const renderTaskListItem = (itemData) => {
     return (
       <TaskListItem
         task={itemData.item}
         onCheckBoxPressed={reactivateTaskHandler.bind(null, itemData.item)}
+        onDetailsPressed={detailsPressedHandler.bind(null, itemData.item)}
       />
     );
   };
