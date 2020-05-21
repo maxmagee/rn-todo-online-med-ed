@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Button, Keyboard, ScrollView, StyleSheet, View } from "react-native";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import CallToActionButton from "../components/ui/CallToActionButton";
@@ -21,6 +21,7 @@ const CreateToDoScreen = (props) => {
   const { navigation } = props;
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [dueDate, setDueDate] = useState(today);
+  const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
   const dispatch = useDispatch();
 
   const { control, setValue, handleSubmit, errors, setError } = useForm();
@@ -49,6 +50,7 @@ const CreateToDoScreen = (props) => {
     const trimmedName = data.name.trim().trimStart();
     const trimmedDescription = data.name.trim().trimStart();
     dispatch(taskActions.createTask(trimmedName, trimmedDescription, dueDate || today));
+    dispatch(taskActions.sortTasks(lastActiveListSortType, true));
     navigation.goBack();
   };
 

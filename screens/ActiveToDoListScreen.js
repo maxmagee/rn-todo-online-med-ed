@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import { FlatList, SafeAreaView, StyleSheet, View, StatusBar } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DrawerActions } from "react-navigation-drawer";
 import { useDispatch, useSelector } from "react-redux";
 
+import { MaterialIcons } from "@expo/vector-icons";
 import CustomHeaderButton from "../components/ui/CustomHeaderButton";
 import DefaultText from "../components/ui/DefaultText";
 import TaskListItem from "../components/task/TaskListItem";
 
 import colors from "../constants/colors";
+import types from "../constants/types";
 import * as taskActions from "../store/actions/tasks";
 
 const ActiveToDoListScreen = (props) => {
   const { navigation } = props;
   const activeTasks = useSelector((state) => state.tasks.activeTasks);
+  const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
   const dispatch = useDispatch();
+
+  const sortTasksHandler = useCallback(() => {
+    const newSortType =
+      lastActiveListSortType === types.sort.byDueDateAsc
+        ? types.sort.byDueDateDesc
+        : types.sort.byDueDateAsc;
+    dispatch(taskActions.sortTasks(newSortType, true));
+  }, [dispatch, lastActiveListSortType, taskActions]);
 
   const completeTaskHandler = (task) => {
     dispatch(taskActions.completeTask(task));
@@ -24,6 +35,10 @@ const ActiveToDoListScreen = (props) => {
   const editTaskHandler = (task) => {
     navigation.navigate("EditToDo", { task });
   };
+
+  useEffect(() => {
+    navigation.setParams({ sortTasks: sortTasksHandler });
+  }, [sortTasksHandler]);
 
   const renderTaskListItem = (itemData) => {
     return (
@@ -59,11 +74,14 @@ const ActiveToDoListScreen = (props) => {
 ActiveToDoListScreen.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+    setParams: PropTypes.func.isRequired,
   }).isRequired,
 };
 ActiveToDoListScreen.defaultProps = {};
 
 ActiveToDoListScreen.navigationOptions = (navigationData) => {
+  const sortTasksHandler = navigationData.navigation.getParam("sortTasks");
+
   const goToCreateScreenHandler = () => {
     navigationData.navigation.navigate("CreateToDo");
   };
@@ -83,6 +101,12 @@ ActiveToDoListScreen.navigationOptions = (navigationData) => {
     headerRight: () => {
       return (
         <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            IconComponent={MaterialIcons}
+            iconName="sort"
+            onPress={sortTasksHandler}
+            title="Sort"
+          />
           <Item iconName="ios-add" onPress={goToCreateScreenHandler} title="Create" />
         </HeaderButtons>
       );
