@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Alert, Button, Keyboard, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  Button,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import CallToActionButton from "../components/ui/CallToActionButton";
 import CustomTextInput from "../components/ui/CustomTextInput";
 import DefaultText from "../components/ui/DefaultText";
