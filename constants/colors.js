@@ -9,6 +9,7 @@ export default {
     pink: "rgb(255, 55, 95)",
     purple: "rgb(191, 90, 242)",
     red: "rgb(255, 69, 58)",
+    redDarker: "rgb(215, 69, 58)",
     systemGray: "rgb(142, 142, 147)",
     systemGray2: "rgb(99, 99, 102)",
     systemGray3: "rgb(72, 72, 74)",
