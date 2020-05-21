@@ -20,7 +20,7 @@ const EditToDoScreen = (props) => {
   const { navigation } = props;
   const task = navigation.getParam("task");
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
-  const [dueDate, setDueDate] = useState(today);
+  const [dueDate, setDueDate] = useState(task.dueDate);
   const dispatch = useDispatch();
 
   const { control, setValue, handleSubmit } = useForm();
@@ -75,6 +75,7 @@ const EditToDoScreen = (props) => {
             <Button color={colors.dark.blue} title="Change Due Date" onPress={showDatePicker} />
             <DateTimePickerModal
               mode="date"
+              date={dueDate}
               minimumDate={today}
               isVisible={isDatePickerVisible}
               onConfirm={dateConfirmedHandler}
