@@ -4,8 +4,8 @@ import { FlatList, SafeAreaView, StyleSheet, View, StatusBar } from "react-nativ
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DrawerActions } from "react-navigation-drawer";
 import { useDispatch, useSelector } from "react-redux";
-
 import { MaterialIcons } from "@expo/vector-icons";
+
 import CustomHeaderButton from "../components/ui/CustomHeaderButton";
 import DefaultText from "../components/ui/DefaultText";
 import TaskListItem from "../components/task/TaskListItem";
@@ -18,6 +18,8 @@ const ActiveToDoListScreen = (props) => {
   const { navigation } = props;
   const activeTasks = useSelector((state) => state.tasks.activeTasks);
   const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
+  const lastCompletedListSortType = useSelector((state) => state.tasks.lastCompletedListSortType);
+
   const dispatch = useDispatch();
 
   const sortTasksHandler = useCallback(() => {
@@ -26,10 +28,11 @@ const ActiveToDoListScreen = (props) => {
         ? types.sort.byDueDateDesc
         : types.sort.byDueDateAsc;
     dispatch(taskActions.sortTasks(newSortType, true));
-  }, [dispatch, lastActiveListSortType, taskActions]);
+  }, [dispatch, lastActiveListSortType, lastCompletedListSortType, taskActions]);
 
   const completeTaskHandler = (task) => {
     dispatch(taskActions.completeTask(task));
+    dispatch(taskActions.sortTasks(lastCompletedListSortType, false));
   };
 
   const editTaskHandler = (task) => {

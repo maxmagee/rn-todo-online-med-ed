@@ -24,7 +24,8 @@ const TASKS = [
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
     utils.getRandomDate(),
-    false
+    false,
+    utils.getRandomDate()
   ),
   //
   new Task(
@@ -49,7 +50,8 @@ const TASKS = [
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
     utils.getRandomDate(),
-    false
+    false,
+    utils.getRandomDate()
   ),
   new Task(
     "t7",
@@ -73,7 +75,8 @@ const TASKS = [
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
     utils.getRandomDate(),
-    false
+    false,
+    utils.getRandomDate()
   ),
   new Task(
     "t10",
@@ -97,7 +100,8 @@ const TASKS = [
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
     utils.getRandomDate(),
-    false
+    false,
+    utils.getRandomDate()
   ),
   new Task(
     "t13",
@@ -121,7 +125,8 @@ const TASKS = [
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
     utils.getRandomDate(),
-    false
+    false,
+    utils.getRandomDate()
   ),
   new Task(
     "t16",
@@ -145,7 +150,8 @@ const TASKS = [
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
     utils.getRandomDate(),
-    false
+    false,
+    utils.getRandomDate()
   ),
   new Task(
     "t24",
@@ -169,7 +175,8 @@ const TASKS = [
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
     utils.getRandomDate(),
-    false
+    false,
+    utils.getRandomDate()
   ),
   new Task(
     "t21",
@@ -193,7 +200,8 @@ const TASKS = [
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
     utils.getRandomDate(),
-    false
+    false,
+    utils.getRandomDate()
   ),
 ];
 
