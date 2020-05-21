@@ -1,4 +1,10 @@
-import { COMPLETE_TASK, CREATE_TASK, EDIT_TASK, REACTIVATE_TASK } from "../actions/tasks";
+import {
+  COMPLETE_TASK,
+  CREATE_TASK,
+  DELETE_TASK,
+  EDIT_TASK,
+  REACTIVATE_TASK,
+} from "../actions/tasks";
 import Task from "../../models/task";
 import TASKS from "../../data/dummy-data";
 
@@ -29,6 +35,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         activeTasks: state.activeTasks.concat(newTask),
+      };
+    }
+    case DELETE_TASK: {
+      const updatedActiveTasks = state.activeTasks.filter((task) => task.id !== action.task.id);
+      return {
+        ...state,
+        activeTasks: updatedActiveTasks,
       };
     }
     case EDIT_TASK: {

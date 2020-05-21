@@ -1,5 +1,6 @@
 export const COMPLETE_TASK = "COMPLETE_TASK";
 export const CREATE_TASK = "CREATE_TASK";
+export const DELETE_TASK = "DELETE_TASK";
 export const EDIT_TASK = "EDIT_TASK";
 export const REACTIVATE_TASK = "REACTIVATE_TASK";
 
@@ -26,6 +27,17 @@ export const createTask = (name, description, dueDate) => {
     taskDueDate: dueDate,
     taskName: name,
     type: CREATE_TASK,
+  };
+};
+
+/**
+ * Delete a given Task
+ * @param {Task} task The Task to delete
+ */
+export const deleteTask = (task) => {
+  return {
+    task,
+    type: DELETE_TASK,
   };
 };
 
