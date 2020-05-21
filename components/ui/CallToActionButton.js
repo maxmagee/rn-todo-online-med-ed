@@ -8,12 +8,14 @@ import DefaultText from "./DefaultText";
 import colors from "../../constants/colors";
 
 const CallToActionButton = (props) => {
-  const { label, onPress, style } = props;
+  const { isDestructive, label, onPress, style } = props;
+  const upperColor = isDestructive ? colors.dark.red : colors.dark.blue;
+  const lowerColor = isDestructive ? colors.dark.redDarker : colors.dark.indigo;
 
   return (
     <TouchableHighlight onPress={onPress} underlayColor="transparent">
       <LinearGradient
-        colors={[colors.dark.blue, colors.dark.indigo]}
+        colors={[upperColor, lowerColor]}
         style={{ ...styles.gradientStyle, ...style }}
       >
         <DefaultText style={styles.labelText}>{label}</DefaultText>
@@ -23,12 +25,14 @@ const CallToActionButton = (props) => {
 };
 
 CallToActionButton.propTypes = {
+  isDestructive: PropTypes.bool,
   label: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
   style: ViewPropTypes.style,
 };
 
 CallToActionButton.defaultProps = {
+  isDestructive: false,
   style: StyleSheet.create({}),
 };
 
