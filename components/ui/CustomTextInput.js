@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.dark.systemGray3,
     borderBottomWidth: 1,
     color: colors.dark.lightGray,
-    paddingHorizontal: 2,
+    paddingHorizontal: 10,
     paddingVertical: 5,
   },
   label: {

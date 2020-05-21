@@ -21,11 +21,16 @@ const ActiveToDoListScreen = (props) => {
     dispatch(taskActions.completeTask(task));
   };
 
+  const editTaskHandler = (task) => {
+    navigation.navigate("EditToDo", { task });
+  };
+
   const renderTaskListItem = (itemData) => {
     return (
       <TaskListItem
         task={itemData.item}
         onCheckBoxPressed={completeTaskHandler.bind(null, itemData.item)}
+        onDetailsPressed={editTaskHandler.bind(null, itemData.item)}
       />
     );
   };

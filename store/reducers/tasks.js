@@ -1,4 +1,4 @@
-import { COMPLETE_TASK, CREATE_TASK, REACTIVATE_TASK } from "../actions/tasks";
+import { COMPLETE_TASK, CREATE_TASK, EDIT_TASK, REACTIVATE_TASK } from "../actions/tasks";
 import Task from "../../models/task";
 import TASKS from "../../data/dummy-data";
 
@@ -29,6 +29,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         activeTasks: state.activeTasks.concat(newTask),
+      };
+    }
+    case EDIT_TASK: {
+      const taskToUpdate = state.activeTasks.find((task) => task.id === action.task.id);
+
+      taskToUpdate.name = action.task.name;
+      taskToUpdate.description = action.task.description;
+      taskToUpdate.dueDate = action.task.dueDate;
+
+      return {
+        ...state,
+        activeTasks: [...state.activeTasks],
       };
     }
     case REACTIVATE_TASK: {
