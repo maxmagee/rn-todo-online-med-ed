@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Button, Keyboard, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Button,
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import CallToActionButton from "../components/ui/CallToActionButton";
 import CustomTextInput from "../components/ui/CustomTextInput";
 import DefaultText from "../components/ui/DefaultText";
+import PriorityButton from "../components/task/PriorityButton";
 
 import colors from "../constants/colors";
+import types from "../constants/types";
 import * as taskActions from "../store/actions/tasks";
 
 const moment = require("moment");
@@ -20,6 +28,10 @@ const today = new Date();
 const CreateToDoScreen = (props) => {
   const { navigation } = props;
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+  const [isLowPriority, setIsLowPriority] = useState(false);
+  const [isMedPriority, setIsMedPriority] = useState(false);
+  const [isHighPriority, setIsHighPriority] = useState(false);
+  const [currentPriorityKey, setCurrentPriorityKey] = useState(null);
   const [dueDate, setDueDate] = useState(today);
   const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
   const dispatch = useDispatch();
@@ -49,9 +61,57 @@ const CreateToDoScreen = (props) => {
     }
     const trimmedName = data.name.trim().trimStart();
     const trimmedDescription = data.name.trim().trimStart();
-    dispatch(taskActions.createTask(trimmedName, trimmedDescription, dueDate || today));
+    dispatch(
+      taskActions.createTask(currentPriorityKey, trimmedName, trimmedDescription, dueDate || today)
+    );
     dispatch(taskActions.sortTasks(lastActiveListSortType, true));
     navigation.goBack();
+  };
+
+  const switchPriorityHandler = (priorityKey) => {
+    switch (priorityKey) {
+      case types.priority.keys.low: {
+        setIsLowPriority((prevIsLowPriority) => {
+          if (prevIsLowPriority) {
+            setCurrentPriorityKey(null);
+          } else {
+            setCurrentPriorityKey(priorityKey);
+          }
+          return !prevIsLowPriority;
+        });
+        setIsMedPriority(false);
+        setIsHighPriority(false);
+        break;
+      }
+      case types.priority.keys.medium: {
+        setIsMedPriority((prevIsMedPriority) => {
+          if (prevIsMedPriority) {
+            setCurrentPriorityKey(null);
+          } else {
+            setCurrentPriorityKey(priorityKey);
+          }
+          return !prevIsMedPriority;
+        });
+        setIsLowPriority(false);
+        setIsHighPriority(false);
+        break;
+      }
+      case types.priority.keys.high: {
+        setIsHighPriority((prevIsHighPriority) => {
+          if (prevIsHighPriority) {
+            setCurrentPriorityKey(null);
+          } else {
+            setCurrentPriorityKey(priorityKey);
+          }
+          return !prevIsHighPriority;
+        });
+        setIsLowPriority(false);
+        setIsMedPriority(false);
+        break;
+      }
+      default:
+        break;
+    }
   };
 
   return (
@@ -94,6 +154,26 @@ const CreateToDoScreen = (props) => {
               onCancel={hideDatePicker}
             />
           </View>
+          <View style={styles.prioritiesContainer}>
+            <PriorityButton
+              isActive={isLowPriority}
+              priority={types.priority.low}
+              onPress={switchPriorityHandler.bind(null, types.priority.keys.low)}
+              showLabel
+            />
+            <PriorityButton
+              isActive={isMedPriority}
+              priority={types.priority.medium}
+              onPress={switchPriorityHandler.bind(null, types.priority.keys.medium)}
+              showLabel
+            />
+            <PriorityButton
+              isActive={isHighPriority}
+              priority={types.priority.high}
+              onPress={switchPriorityHandler.bind(null, types.priority.keys.high)}
+              showLabel
+            />
+          </View>
           <View style={styles.buttonContainer}>
             <CallToActionButton label="Submit" onPress={handleSubmit(onSubmitHandler)} />
           </View>
@@ -132,6 +212,13 @@ const styles = StyleSheet.create({
   },
   errorTextContainer: {
     paddingTop: 5,
+  },
+  prioritiesContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingTop: 10,
+    width: "100%",
   },
   scrollView: {
     backgroundColor: colors.dark.systemGray6,

@@ -18,15 +18,17 @@ export const completeTask = (task) => {
 
 /**
  * Create a new task
+ * @param {string} priorityKey The priority type key
  * @param {string} name The name of the task
  * @param {string} description A brief description of the task
  * @param {Date} dueDate The due date for the task
  */
-export const createTask = (name, description, dueDate) => {
+export const createTask = (priorityKey, name, description, dueDate) => {
   return {
     taskDescription: description,
     taskDueDate: dueDate,
     taskName: name,
+    taskPriorityKey: priorityKey,
     type: CREATE_TASK,
   };
 };

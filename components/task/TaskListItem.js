@@ -4,7 +4,10 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import DefaultText from "../ui/DefaultText";
 import CircleCheckBox from "../ui/CircleCheckBox";
+import PriorityButton from "./PriorityButton";
+
 import colors from "../../constants/colors";
+import types from "../../constants/types";
 
 const moment = require("moment");
 
@@ -33,6 +36,19 @@ const TaskListItem = (props) => {
     );
   };
 
+  const renderPriorityIndicator = () => {
+    if (!task.priorityKey) return null;
+
+    return (
+      <PriorityButton
+        isActive={false}
+        isDisabled
+        onPress={() => {}}
+        priority={types.priority[task.priorityKey]}
+      />
+    );
+  };
+
   return (
     <TouchableOpacity onPress={onDetailsPressed}>
       <View style={styles.container}>
@@ -43,6 +59,7 @@ const TaskListItem = (props) => {
           </View>
           {renderDate()}
         </View>
+        {renderPriorityIndicator()}
       </View>
     </TouchableOpacity>
   );
@@ -58,6 +75,7 @@ TaskListItem.propTypes = {
     id: PropTypes.string.isRequired,
     isActive: PropTypes.bool.isRequired,
     name: PropTypes.string.isRequired,
+    priorityKey: PropTypes.string,
   }).isRequired,
 };
 TaskListItem.defaultProps = {};
@@ -78,7 +96,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     justifyContent: "space-around",
-    paddingLeft: 10,
+    paddingHorizontal: 10,
   },
   nameText: {
     fontSize: 17,

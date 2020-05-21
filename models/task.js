@@ -4,9 +4,10 @@ import utils from "../utils/utils";
 const moment = require("moment");
 
 class Task {
-  constructor(id, userId, name, description, dueDate, isActive, dateCompleted) {
+  constructor(id, userId, priorityKey, name, description, dueDate, isActive, dateCompleted) {
     this.id = id;
     this.userId = userId;
+    this.priorityKey = priorityKey;
     this.name = name;
     this.description = description;
     this.dueDate = dueDate;
@@ -14,10 +15,11 @@ class Task {
     this.dateCompleted = dateCompleted;
   }
 
-  static create(name, description, dueDate) {
+  static create(priorityKey, name, description, dueDate) {
     return new Task(
       utils.getUniqueId(),
       expoConstants.installationId,
+      priorityKey,
       name,
       description,
       dueDate,
