@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import CallToActionButton from "../components/ui/CallToActionButton";
 import CustomTextInput from "../components/ui/CustomTextInput";
+import DefaultText from "../components/ui/DefaultText";
 
 import colors from "../constants/colors";
 import * as taskActions from "../store/actions/tasks";
@@ -22,7 +23,7 @@ const CreateToDoScreen = (props) => {
   const [dueDate, setDueDate] = useState(today);
   const dispatch = useDispatch();
 
-  const { control, setValue, handleSubmit } = useForm();
+  const { control, setValue, handleSubmit, errors, setError } = useForm();
 
   const hideDatePicker = () => {
     setIsDatePickerVisible(false);
@@ -41,7 +42,13 @@ const CreateToDoScreen = (props) => {
   };
 
   const onSubmitHandler = (data) => {
-    dispatch(taskActions.createTask(data.name, data.description, dueDate || today));
+    if (data.name.trim().length === 0) {
+      setError("name", "minLength", "Name is required.");
+      return;
+    }
+    const trimmedName = data.name.trim().trimStart();
+    const trimmedDescription = data.name.trim().trimStart();
+    dispatch(taskActions.createTask(trimmedName, trimmedDescription, dueDate || today));
     navigation.goBack();
   };
 
@@ -54,7 +61,11 @@ const CreateToDoScreen = (props) => {
             control={control}
             name="name"
             onChange={(args) => args[0].nativeEvent.text}
+            rules={{ required: true }}
           />
+          {errors.name && (
+            <DefaultText style={{ color: colors.dark.red }}>Name is required.</DefaultText>
+          )}
           <Controller
             as={<CustomTextInput label="Description" multiline style={styles.textArea} />}
             control={control}
