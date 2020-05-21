@@ -50,8 +50,8 @@ export default (state = initialState, action) => {
       };
     }
     case CREATE_TASK: {
-      const { taskName, taskDescription, taskDueDate } = action;
-      const newTask = Task.create(taskName, taskDescription, taskDueDate);
+      const { taskPriorityKey, taskName, taskDescription, taskDueDate } = action;
+      const newTask = Task.create(taskPriorityKey, taskName, taskDescription, taskDueDate);
 
       return {
         ...state,

@@ -9,11 +9,11 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import CallToActionButton from "../components/ui/CallToActionButton";
 import CustomTextInput from "../components/ui/CustomTextInput";
 import DefaultText from "../components/ui/DefaultText";
+import PriorityButton from "../components/task/PriorityButton";
 
 import colors from "../constants/colors";
-import * as taskActions from "../store/actions/tasks";
-import PriorityButton from "../components/task/PriorityButton";
 import types from "../constants/types";
+import * as taskActions from "../store/actions/tasks";
 
 const moment = require("moment");
 
@@ -25,6 +25,7 @@ const CreateToDoScreen = (props) => {
   const [isLowPriority, setIsLowPriority] = useState(false);
   const [isMedPriority, setIsMedPriority] = useState(false);
   const [isHighPriority, setIsHighPriority] = useState(false);
+  const [currentPriorityKey, setCurrentPriorityKey] = useState(null);
   const [dueDate, setDueDate] = useState(today);
   const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
   const dispatch = useDispatch();
@@ -54,7 +55,9 @@ const CreateToDoScreen = (props) => {
     }
     const trimmedName = data.name.trim().trimStart();
     const trimmedDescription = data.name.trim().trimStart();
-    dispatch(taskActions.createTask(trimmedName, trimmedDescription, dueDate || today));
+    dispatch(
+      taskActions.createTask(currentPriorityKey, trimmedName, trimmedDescription, dueDate || today)
+    );
     dispatch(taskActions.sortTasks(lastActiveListSortType, true));
     navigation.goBack();
   };
@@ -63,6 +66,11 @@ const CreateToDoScreen = (props) => {
     switch (priorityKey) {
       case types.priority.keys.low: {
         setIsLowPriority((prevIsLowPriority) => {
+          if (prevIsLowPriority) {
+            setCurrentPriorityKey(null);
+          } else {
+            setCurrentPriorityKey(priorityKey);
+          }
           return !prevIsLowPriority;
         });
         setIsMedPriority(false);
@@ -71,6 +79,11 @@ const CreateToDoScreen = (props) => {
       }
       case types.priority.keys.medium: {
         setIsMedPriority((prevIsMedPriority) => {
+          if (prevIsMedPriority) {
+            setCurrentPriorityKey(null);
+          } else {
+            setCurrentPriorityKey(priorityKey);
+          }
           return !prevIsMedPriority;
         });
         setIsLowPriority(false);
@@ -79,6 +92,11 @@ const CreateToDoScreen = (props) => {
       }
       case types.priority.keys.high: {
         setIsHighPriority((prevIsHighPriority) => {
+          if (prevIsHighPriority) {
+            setCurrentPriorityKey(null);
+          } else {
+            setCurrentPriorityKey(priorityKey);
+          }
           return !prevIsHighPriority;
         });
         setIsLowPriority(false);
