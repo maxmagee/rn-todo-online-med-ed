@@ -52,9 +52,13 @@ const RootNavigator = createDrawerNavigator(
   },
   {
     contentOptions: {
-      activeTintColor: colors.dark.lightGray,
+      activeBackgroundColor: colors.dark.systemGray5,
+      activeTintColor: colors.dark.blue,
+      inactiveBackgroundColor: colors.dark.systemGray5,
+      inactiveTintColor: colors.dark.lightGray,
     },
     drawerBackgroundColor: colors.dark.systemGray5,
+    drawerWidth: 200,
     initialRouteName: "Active",
     order: ["Active", "Completed"],
   }
