@@ -4,13 +4,34 @@ import {
   DELETE_TASK,
   EDIT_TASK,
   REACTIVATE_TASK,
+  SORT_TASKS,
 } from "../actions/tasks";
 import Task from "../../models/task";
 import TASKS from "../../data/dummy-data";
+import types from "../../constants/types";
 
 const initialState = {
-  activeTasks: TASKS.filter((task) => task.isActive),
-  completedTasks: TASKS.filter((task) => !task.isActive),
+  activeTasks: TASKS.filter((task) => task.isActive).sort((a, b) => a.dueDate - b.dueDate),
+  completedTasks: TASKS.filter((task) => !task.isActive).sort(
+    (a, b) => b.dateCompleted - a.dateCompleted
+  ),
+  lastActiveListSortType: types.sort.byDueDateAsc,
+  lastCompletedListSortType: types.sort.byDateCompletedDesc,
+};
+
+const sortByType = (tasks, sortType) => {
+  switch (sortType) {
+    case types.sort.byDueDateAsc:
+      return tasks.slice().sort((a, b) => a.dueDate - b.dueDate);
+    case types.sort.byDueDateDesc:
+      return tasks.slice().sort((a, b) => b.dueDate - a.dueDate);
+    case types.sort.byDateCompletedAsc:
+      return tasks.slice().sort((a, b) => a.dateCompleted - b.dateCompleted);
+    case types.sort.byDateCompletedDesc:
+      return tasks.slice().sort((a, b) => b.dateCompleted - a.dateCompleted);
+    default:
+      return tasks.slice();
+  }
 };
 
 export default (state = initialState, action) => {
@@ -69,6 +90,34 @@ export default (state = initialState, action) => {
         ...state,
         activeTasks: state.activeTasks.concat(activatedTask),
         completedTasks: updatedCompletedTasks,
+      };
+    }
+    case SORT_TASKS: {
+      let updatedActiveTasks = null;
+      let updatedCompletedTasks = null;
+
+      if (action.isActiveList) {
+        updatedActiveTasks =
+          action.sortType === types.sort.byDueDateAsc
+            ? sortByType(state.activeTasks, types.sort.byDueDateAsc)
+            : sortByType(state.activeTasks, types.sort.byDueDateDesc);
+
+        return {
+          ...state,
+          activeTasks: updatedActiveTasks,
+          lastActiveListSortType: action.sortType,
+        };
+      }
+
+      updatedCompletedTasks =
+        action.sortType === types.sort.byDateCompletedAsc
+          ? sortByType(state.completedTasks, types.sort.byDateCompletedAsc)
+          : sortByType(state.completedTasks, types.sort.byDateCompletedDesc);
+
+      return {
+        ...state,
+        completedTasks: updatedCompletedTasks,
+        lastCompletedListSortType: action.sortType,
       };
     }
     default:

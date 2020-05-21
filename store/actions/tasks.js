@@ -3,6 +3,7 @@ export const CREATE_TASK = "CREATE_TASK";
 export const DELETE_TASK = "DELETE_TASK";
 export const EDIT_TASK = "EDIT_TASK";
 export const REACTIVATE_TASK = "REACTIVATE_TASK";
+export const SORT_TASKS = "SORT_TASKS";
 
 /**
  * Completes a task
@@ -60,5 +61,13 @@ export const reactivateTask = (task) => {
   return {
     task,
     type: REACTIVATE_TASK,
+  };
+};
+
+export const sortTasks = (sortType, isActiveList) => {
+  return {
+    isActiveList,
+    sortType,
+    type: SORT_TASKS,
   };
 };
