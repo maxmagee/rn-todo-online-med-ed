@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Button, Keyboard, ScrollView, StyleSheet, View } from "react-native";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import CallToActionButton from "../components/ui/CallToActionButton";
 import CustomTextInput from "../components/ui/CustomTextInput";
+import DefaultText from "../components/ui/DefaultText";
 
 import colors from "../constants/colors";
 import * as taskActions from "../store/actions/tasks";
@@ -22,13 +23,7 @@ const CreateToDoScreen = (props) => {
   const [dueDate, setDueDate] = useState(today);
   const dispatch = useDispatch();
 
-  const { register, handleSubmit, setValue } = useForm();
-
-  useEffect(() => {
-    register("name");
-    register("description");
-    register("dueDate");
-  }, [register]);
+  const { control, setValue, handleSubmit, errors, setError } = useForm();
 
   const hideDatePicker = () => {
     setIsDatePickerVisible(false);
@@ -39,13 +34,21 @@ const CreateToDoScreen = (props) => {
   };
 
   const dateConfirmedHandler = (date) => {
+    // Set local state variable so we can display a different value
     setDueDate(date);
-    setValue("dueDate", date);
+    // Use the display version in the text input
+    setValue("dueDate", moment(date).format("ddd LL"));
     hideDatePicker();
   };
 
   const onSubmitHandler = (data) => {
-    dispatch(taskActions.createTask(data.name, data.description, data.dueDate || today));
+    if (data.name.trim().length === 0) {
+      setError("name", "minLength", "Name is required.");
+      return;
+    }
+    const trimmedName = data.name.trim().trimStart();
+    const trimmedDescription = data.name.trim().trimStart();
+    dispatch(taskActions.createTask(trimmedName, trimmedDescription, dueDate || today));
     navigation.goBack();
   };
 
@@ -53,30 +56,36 @@ const CreateToDoScreen = (props) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <ScrollView style={styles.scrollView}>
         <View behavior="height" style={styles.centeredScreen}>
-          <CustomTextInput
-            label="Name"
-            onChangeText={(text) => {
-              setValue("name", text);
-            }}
+          <Controller
+            as={<CustomTextInput label="Name" />}
+            control={control}
+            name="name"
+            onChange={(args) => args[0].nativeEvent.text}
+            rules={{ required: true }}
           />
-          <CustomTextInput
-            label="Description"
-            style={styles.textArea}
-            multiline
-            onChangeText={(text) => {
-              setValue("description", text);
-            }}
+          {errors.name && (
+            <View style={styles.errorTextContainer}>
+              <DefaultText style={styles.errorText}>Name is required.</DefaultText>
+            </View>
+          )}
+          <Controller
+            as={<CustomTextInput label="Description" multiline style={styles.textArea} />}
+            control={control}
+            name="description"
+            onChange={(args) => args[0].nativeEvent.text}
           />
-          <CustomTextInput
-            onFocus={showDatePicker}
-            label="Due Date"
-            editable={false}
-            value={moment(dueDate).format("ddd LL")}
+          <Controller
+            as={<CustomTextInput label="Due Date" editable={false} onFocus={showDatePicker} />}
+            control={control}
+            name="dueDate"
+            onChange={(args) => args[0].nativeEvent.text}
+            defaultValue={moment(today).format("ddd LL")}
           />
           <View>
             <Button color={colors.dark.blue} title="Change Due Date" onPress={showDatePicker} />
             <DateTimePickerModal
               mode="date"
+              date={dueDate}
               minimumDate={today}
               isVisible={isDatePickerVisible}
               onConfirm={dateConfirmedHandler}
@@ -115,6 +124,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 20,
     paddingVertical: 10,
+  },
+  errorText: {
+    color: colors.dark.red,
+  },
+  errorTextContainer: {
+    paddingTop: 5,
   },
   scrollView: {
     backgroundColor: colors.dark.systemGray6,
