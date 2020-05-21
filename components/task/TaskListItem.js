@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import DefaultText from "../ui/DefaultText";
 import CircleCheckBox from "../ui/CircleCheckBox";
@@ -9,7 +9,7 @@ import colors from "../../constants/colors";
 const moment = require("moment");
 
 const TaskListItem = (props) => {
-  const { onCheckBoxPressed, task } = props;
+  const { onCheckBoxPressed, onDetailsPressed, task } = props;
 
   const renderDate = () => {
     if (task.isActive) {
@@ -34,20 +34,23 @@ const TaskListItem = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <CircleCheckBox isChecked={!task.isActive} onPress={onCheckBoxPressed} />
-      <View style={styles.detailsContainer}>
-        <View style={styles.row}>
-          <DefaultText style={styles.nameText}>{task.name}</DefaultText>
+    <TouchableOpacity onPress={onDetailsPressed}>
+      <View style={styles.container}>
+        <CircleCheckBox isChecked={!task.isActive} onPress={onCheckBoxPressed} />
+        <View style={styles.detailsContainer}>
+          <View style={styles.row}>
+            <DefaultText style={styles.nameText}>{task.name}</DefaultText>
+          </View>
+          {renderDate()}
         </View>
-        {renderDate()}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 TaskListItem.propTypes = {
   onCheckBoxPressed: PropTypes.func.isRequired,
+  onDetailsPressed: PropTypes.func.isRequired,
   task: PropTypes.shape({
     displayDateCompleted: PropTypes.string,
     displayDueDate: PropTypes.string.isRequired,
