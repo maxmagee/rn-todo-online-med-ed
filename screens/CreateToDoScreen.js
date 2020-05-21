@@ -153,16 +153,19 @@ const CreateToDoScreen = (props) => {
               isActive={isLowPriority}
               priority={types.priority.low}
               onPress={switchPriorityHandler.bind(null, types.priority.keys.low)}
+              showLabel
             />
             <PriorityButton
               isActive={isMedPriority}
               priority={types.priority.medium}
               onPress={switchPriorityHandler.bind(null, types.priority.keys.medium)}
+              showLabel
             />
             <PriorityButton
               isActive={isHighPriority}
               priority={types.priority.high}
               onPress={switchPriorityHandler.bind(null, types.priority.keys.high)}
+              showLabel
             />
           </View>
           <View style={styles.buttonContainer}>

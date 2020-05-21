@@ -7,15 +7,15 @@ import DefaultText from "../ui/DefaultText";
 import colors from "../../constants/colors";
 
 const PriorityButton = (props) => {
-  const { isActive, onPress, priority } = props;
+  const { isActive, isDisabled, onPress, priority, showLabel } = props;
   const fillColor = priority.color;
   const buttonStyle = isActive ? { ...styles.button, ...styles.activeButton } : styles.button;
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity disabled={isDisabled} onPress={onPress}>
       <View style={styles.container}>
         <View style={{ ...buttonStyle, backgroundColor: fillColor }} />
-        <DefaultText style={styles.label}> - {priority.name}</DefaultText>
+        {showLabel && <DefaultText style={styles.label}> - {priority.name}</DefaultText>}
       </View>
     </TouchableOpacity>
   );
@@ -23,15 +23,20 @@ const PriorityButton = (props) => {
 
 PriorityButton.propTypes = {
   isActive: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool,
   onPress: PropTypes.func.isRequired,
   priority: PropTypes.shape({
     color: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
   }).isRequired,
+  showLabel: PropTypes.bool,
 };
 
-PriorityButton.defaultProps = {};
+PriorityButton.defaultProps = {
+  isDisabled: false,
+  showLabel: false,
+};
 
 const styles = StyleSheet.create({
   activeButton: {

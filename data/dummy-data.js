@@ -5,7 +5,7 @@ const TASKS = [
   new Task(
     "t1",
     "u1",
-    null,
+    "high",
     "Wash the dishes",
     "The sink is full of dishes, clean them.",
     utils.getRandomDate(),
@@ -14,7 +14,7 @@ const TASKS = [
   new Task(
     "t2",
     "u1",
-    null,
+    "medium",
     "Take out the trash",
     "Garbage collection is tomorrow morning.",
     utils.getRandomDate(),
@@ -23,7 +23,7 @@ const TASKS = [
   new Task(
     "t3",
     "u1",
-    null,
+    "low",
     "Sweep the floor",
     "The dog brought in a lot of footprints last night.",
     utils.getRandomDate(),
