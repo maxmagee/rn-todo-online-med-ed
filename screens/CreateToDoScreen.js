@@ -64,7 +64,9 @@ const CreateToDoScreen = (props) => {
             rules={{ required: true }}
           />
           {errors.name && (
-            <DefaultText style={{ color: colors.dark.red }}>Name is required.</DefaultText>
+            <View style={styles.errorTextContainer}>
+              <DefaultText style={styles.errorText}>Name is required.</DefaultText>
+            </View>
           )}
           <Controller
             as={<CustomTextInput label="Description" multiline style={styles.textArea} />}
@@ -122,6 +124,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 20,
     paddingVertical: 10,
+  },
+  errorText: {
+    color: colors.dark.red,
+  },
+  errorTextContainer: {
+    paddingTop: 5,
   },
   scrollView: {
     backgroundColor: colors.dark.systemGray6,

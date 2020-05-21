@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import CallToActionButton from "../components/ui/CallToActionButton";
 import CustomTextInput from "../components/ui/CustomTextInput";
+import DefaultText from "../components/ui/DefaultText";
 
 import colors from "../constants/colors";
 import * as taskActions from "../store/actions/tasks";
@@ -23,7 +24,7 @@ const EditToDoScreen = (props) => {
   const [dueDate, setDueDate] = useState(task.dueDate);
   const dispatch = useDispatch();
 
-  const { control, setValue, handleSubmit } = useForm();
+  const { control, setValue, handleSubmit, errors, setError } = useForm();
 
   const hideDatePicker = () => {
     setIsDatePickerVisible(false);
@@ -42,9 +43,13 @@ const EditToDoScreen = (props) => {
   };
 
   const onSubmitHandler = (data) => {
-    task.description = data.description;
+    if (data.name.trim().length === 0) {
+      setError("name", "minLength", "Name is required.");
+      return;
+    }
+    task.description = data.description.trim().trimStart();
     task.dueDate = dueDate;
-    task.name = data.name;
+    task.name = data.name.trim().trimStart();
 
     dispatch(taskActions.editTask(task));
     navigation.goBack();
@@ -77,7 +82,13 @@ const EditToDoScreen = (props) => {
             name="name"
             onChange={(args) => args[0].nativeEvent.text}
             defaultValue={task.name}
+            rules={{ required: true }}
           />
+          {errors.name && (
+            <View style={styles.errorTextContainer}>
+              <DefaultText style={styles.errorText}>Name is required.</DefaultText>
+            </View>
+          )}
           <Controller
             as={<CustomTextInput label="Description" multiline style={styles.textArea} />}
             control={control}
@@ -139,6 +150,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingHorizontal: 20,
     paddingVertical: 10,
+  },
+  errorText: {
+    color: colors.dark.red,
+  },
+  errorTextContainer: {
+    paddingTop: 5,
   },
   scrollView: {
     backgroundColor: colors.dark.systemGray6,
