@@ -5,6 +5,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DrawerActions } from "react-navigation-drawer";
 import { useDispatch, useSelector } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
+import { connectActionSheet, useActionSheet } from "@expo/react-native-action-sheet";
 
 import CustomHeaderButton from "../components/ui/CustomHeaderButton";
 import DefaultText from "../components/ui/DefaultText";
@@ -16,19 +17,47 @@ import * as taskActions from "../store/actions/tasks";
 
 const ActiveToDoListScreen = (props) => {
   const { navigation } = props;
+  const { showActionSheetWithOptions } = useActionSheet();
   const activeTasks = useSelector((state) => state.tasks.activeTasks);
-  const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
   const lastCompletedListSortType = useSelector((state) => state.tasks.lastCompletedListSortType);
 
   const dispatch = useDispatch();
 
-  const sortTasksHandler = useCallback(() => {
-    const newSortType =
-      lastActiveListSortType === types.sort.byDueDateAsc
-        ? types.sort.byDueDateDesc
-        : types.sort.byDueDateAsc;
-    dispatch(taskActions.sortTasks(newSortType, true));
-  }, [dispatch, lastActiveListSortType, lastCompletedListSortType, taskActions]);
+  const openSortSheetHandler = useCallback(() => {
+    const options = [
+      "Due Date: Oldest",
+      "Due Date: Newest",
+      "Priority: Highest",
+      "Priority: Lowest",
+      "Cancel",
+    ];
+    const cancelButtonIndex = 4;
+
+    showActionSheetWithOptions(
+      {
+        cancelButtonIndex,
+        options,
+      },
+      (buttonIndex) => {
+        switch (buttonIndex) {
+          case 0:
+            dispatch(taskActions.sortTasks(types.sort.byDueDateAsc, true));
+            break;
+          case 1:
+            dispatch(taskActions.sortTasks(types.sort.byDueDateDesc, true));
+            break;
+          case 2:
+            console.log("sorting by highest priority");
+            break;
+          case 3:
+            console.log("sorting by lowest priority");
+            break;
+          default:
+            break;
+        }
+      }
+    );
+  }, [showActionSheetWithOptions]);
 
   const completeTaskHandler = (task) => {
     dispatch(taskActions.completeTask(task));
@@ -40,8 +69,8 @@ const ActiveToDoListScreen = (props) => {
   };
 
   useEffect(() => {
-    navigation.setParams({ sortTasks: sortTasksHandler });
-  }, [sortTasksHandler]);
+    navigation.setParams({ openSortSheet: openSortSheetHandler });
+  }, [openSortSheetHandler]);
 
   const renderTaskListItem = (itemData) => {
     return (
@@ -83,7 +112,7 @@ ActiveToDoListScreen.propTypes = {
 ActiveToDoListScreen.defaultProps = {};
 
 ActiveToDoListScreen.navigationOptions = (navigationData) => {
-  const sortTasksHandler = navigationData.navigation.getParam("sortTasks");
+  const openSortSheetHandler = navigationData.navigation.getParam("openSortSheet");
 
   const goToCreateScreenHandler = () => {
     navigationData.navigation.navigate("CreateToDo");
@@ -107,7 +136,7 @@ ActiveToDoListScreen.navigationOptions = (navigationData) => {
           <Item
             IconComponent={MaterialIcons}
             iconName="sort"
-            onPress={sortTasksHandler}
+            onPress={openSortSheetHandler}
             title="Sort"
           />
           <Item iconName="ios-add" onPress={goToCreateScreenHandler} title="Create" />
@@ -137,4 +166,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ActiveToDoListScreen;
+export default connectActionSheet(ActiveToDoListScreen);
