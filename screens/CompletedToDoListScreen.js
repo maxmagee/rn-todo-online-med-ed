@@ -19,6 +19,7 @@ const CompletedToDoListScreen = (props) => {
   const { navigation } = props;
   const { showActionSheetWithOptions } = useActionSheet();
   const completedTasks = useSelector((state) => state.tasks.completedTasks);
+  const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
   const dispatch = useDispatch();
 
   const openSortSheetHandler = useCallback(() => {
@@ -59,6 +60,7 @@ const CompletedToDoListScreen = (props) => {
 
   const reactivateTaskHandler = (task) => {
     dispatch(taskActions.reactivateTask(task));
+    dispatch(taskActions.sortTasks(lastActiveListSortType, true));
   };
 
   const detailsPressedHandler = (task) => {};
