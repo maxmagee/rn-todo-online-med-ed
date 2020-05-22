@@ -11,7 +11,7 @@ import {
   View,
 } from "react-native";
 import { Controller, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import CallToActionButton from "../components/ui/CallToActionButton";
 import CustomTextInput from "../components/ui/CustomTextInput";
@@ -29,6 +29,7 @@ const today = new Date();
 const EditToDoScreen = (props) => {
   const { navigation } = props;
   const task = navigation.getParam("task");
+  const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [isLowPriority, setIsLowPriority] = useState(task.priorityKey === types.priority.keys.low);
   const [isMedPriority, setIsMedPriority] = useState(
@@ -39,6 +40,7 @@ const EditToDoScreen = (props) => {
   );
   const [currentPriorityKey, setCurrentPriorityKey] = useState(task.priorityKey);
   const [dueDate, setDueDate] = useState(task.dueDate);
+
   const dispatch = useDispatch();
 
   const { control, setValue, handleSubmit, errors, setError } = useForm();
@@ -116,6 +118,7 @@ const EditToDoScreen = (props) => {
     task.priorityKey = currentPriorityKey;
 
     dispatch(taskActions.editTask(task));
+    dispatch(taskActions.sortTasks(lastActiveListSortType, true));
     navigation.goBack();
   };
 

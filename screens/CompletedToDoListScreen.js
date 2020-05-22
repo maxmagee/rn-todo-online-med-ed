@@ -5,6 +5,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DrawerActions } from "react-navigation-drawer";
 import { useDispatch, useSelector } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
+import { connectActionSheet, useActionSheet } from "@expo/react-native-action-sheet";
 
 import CustomHeaderButton from "../components/ui/CustomHeaderButton";
 import DefaultText from "../components/ui/DefaultText";
@@ -16,27 +17,57 @@ import * as taskActions from "../store/actions/tasks";
 
 const CompletedToDoListScreen = (props) => {
   const { navigation } = props;
+  const { showActionSheetWithOptions } = useActionSheet();
   const completedTasks = useSelector((state) => state.tasks.completedTasks);
-  const lastCompletedListSortType = useSelector((state) => state.tasks.lastCompletedListSortType);
+  const lastActiveListSortType = useSelector((state) => state.tasks.lastActiveListSortType);
   const dispatch = useDispatch();
 
-  const sortTasksHandler = useCallback(() => {
-    const newSortType =
-      lastCompletedListSortType === types.sort.byDateCompletedAsc
-        ? types.sort.byDateCompletedDesc
-        : types.sort.byDateCompletedAsc;
-    dispatch(taskActions.sortTasks(newSortType, false));
-  }, [dispatch, lastCompletedListSortType, taskActions]);
+  const openSortSheetHandler = useCallback(() => {
+    const options = [
+      "Oldest Completion",
+      "Newest Completion",
+      "Highest Priority",
+      "Lowest Priority",
+      "Cancel",
+    ];
+    const cancelButtonIndex = 4;
+
+    showActionSheetWithOptions(
+      {
+        cancelButtonIndex,
+        options,
+      },
+      (buttonIndex) => {
+        switch (buttonIndex) {
+          case 0:
+            dispatch(taskActions.sortTasks(types.sort.byDateCompletedAsc, false));
+            break;
+          case 1:
+            dispatch(taskActions.sortTasks(types.sort.byDateCompletedDesc, false));
+            break;
+          case 2:
+            dispatch(taskActions.sortTasks(types.sort.byPriorityDesc, false));
+            break;
+          case 3:
+            dispatch(taskActions.sortTasks(types.sort.byPriorityAsc, false));
+            break;
+          default:
+            break;
+        }
+      }
+    );
+  }, [showActionSheetWithOptions]);
 
   const reactivateTaskHandler = (task) => {
     dispatch(taskActions.reactivateTask(task));
+    dispatch(taskActions.sortTasks(lastActiveListSortType, true));
   };
 
   const detailsPressedHandler = (task) => {};
 
   useEffect(() => {
-    navigation.setParams({ sortTasks: sortTasksHandler });
-  }, [sortTasksHandler]);
+    navigation.setParams({ openSortSheet: openSortSheetHandler });
+  }, [openSortSheetHandler]);
 
   const renderTaskListItem = (itemData) => {
     return (
@@ -77,7 +108,7 @@ CompletedToDoListScreen.propTypes = {
 CompletedToDoListScreen.defaultProps = {};
 
 CompletedToDoListScreen.navigationOptions = (navigationData) => {
-  const sortTasksHandler = navigationData.navigation.getParam("sortTasks");
+  const openShortSheetHandler = navigationData.navigation.getParam("openSortSheet");
 
   const openDrawerHandler = () => {
     navigationData.navigation.dispatch(DrawerActions.openDrawer());
@@ -97,7 +128,7 @@ CompletedToDoListScreen.navigationOptions = (navigationData) => {
           <Item
             IconComponent={MaterialIcons}
             iconName="sort"
-            onPress={sortTasksHandler}
+            onPress={openShortSheetHandler}
             title="Sort"
           />
         </HeaderButtons>
@@ -126,4 +157,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CompletedToDoListScreen;
+export default connectActionSheet(CompletedToDoListScreen);

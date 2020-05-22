@@ -28,6 +28,8 @@ const sort = {
   byDateCompletedDesc: "SORT_BY_DATE_COMPLETED_DESC",
   byDueDateAsc: "SORT_BY_DUE_DATE_ASC",
   byDueDateDesc: "SORT_BY_DUE_DATE_DESC",
+  byPriorityAsc: "SORT_BY_PRIORITY_ASC",
+  byPriorityDesc: "SORT_BY_PRIORITY_DESC",
 };
 
 export default {

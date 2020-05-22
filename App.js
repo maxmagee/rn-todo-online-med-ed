@@ -4,6 +4,7 @@ import { enableScreens } from "react-native-screens";
 import { AppLoading } from "expo";
 import { combineReducers, createStore } from "redux";
 import { Provider } from "react-redux";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import * as Font from "expo-font";
 // TODO: composeWithDevTools should be removed before deploying to production
 import { composeWithDevTools } from 'redux-devtools-extension'; // eslint-disable-line
@@ -36,7 +37,9 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <RootNavigator />
+      <ActionSheetProvider>
+        <RootNavigator />
+      </ActionSheetProvider>
     </Provider>
   );
 }
