@@ -58,7 +58,7 @@ Given more time I would have begun to work on the following:
 - Add unit tests.
 - Add some animation to task items when completing or reactivating them.
 - Android support.
-  - I am aware there are difference in platform capabilities and design philosophy. A developer can use `Platform.OS` to determine the operating system for example.
+  - I am aware there are differences in platform capabilities and design philosophy. A developer can use `Platform.OS` to determine the operating system for example.
   - Given the time constraints, I chose to focus on features rather than cross-platform deployment.
 - Local Data Persistance
 - Firebase Integration For Cloud Database
