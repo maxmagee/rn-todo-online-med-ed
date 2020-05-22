@@ -119,6 +119,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           activeTasks: updatedActiveTasks,
+          lastActiveListSortType: action.sortType,
         };
       }
 
@@ -127,6 +128,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         completedTasks: updatedCompletedTasks,
+        lastCompletedListSortType: action.sortType,
       };
     }
     default:
