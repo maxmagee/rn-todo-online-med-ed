@@ -60,7 +60,7 @@ const CreateToDoScreen = (props) => {
       return;
     }
     const trimmedName = data.name.trim().trimStart();
-    const trimmedDescription = data.name.trim().trimStart();
+    const trimmedDescription = data.description.trim().trimStart();
     dispatch(
       taskActions.createTask(currentPriorityKey, trimmedName, trimmedDescription, dueDate || today)
     );
