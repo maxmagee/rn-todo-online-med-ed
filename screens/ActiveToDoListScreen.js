@@ -24,13 +24,7 @@ const ActiveToDoListScreen = (props) => {
   const dispatch = useDispatch();
 
   const openSortSheetHandler = useCallback(() => {
-    const options = [
-      "Due Date: Oldest",
-      "Due Date: Newest",
-      "Priority: Highest",
-      "Priority: Lowest",
-      "Cancel",
-    ];
+    const options = ["Oldest Due", "Newest Due", "Highest Priority", "Lowest Priority", "Cancel"];
     const cancelButtonIndex = 4;
 
     showActionSheetWithOptions(

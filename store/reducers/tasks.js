@@ -123,7 +123,7 @@ export default (state = initialState, action) => {
         };
       }
 
-      updatedCompletedTasks = sortByType(state.activeTasks, action.sortType);
+      updatedCompletedTasks = sortByType(state.completedTasks, action.sortType);
 
       return {
         ...state,
