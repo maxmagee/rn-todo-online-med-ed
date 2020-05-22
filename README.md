@@ -60,7 +60,7 @@ Given more time I would have begun to work on the following:
 - Android support.
   - I am aware there are differences in platform capabilities and design philosophy. A developer can use `Platform.OS` to determine the operating system for example.
   - Given the time constraints, I chose to focus on features rather than cross-platform deployment.
-- Local Data Persistance
+- Local Data Persistence
 - Firebase Integration For Cloud Database
   - I have a personal project where I demonstrate how I've approached that in the past here: [rn-shop](https://github.com/maxmagee/rn-shop).
 
