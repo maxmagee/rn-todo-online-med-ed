@@ -5,6 +5,9 @@ This is my submission for the React Native Software Engineer challenge for [Onli
 ## Screenshots
 <img src="screenshots/activeTasks.png" width="250" /><img src="screenshots/sorting.png" width="250" /><img src="screenshots/sortedByPriority.png" width="250" /><img src="screenshots/createTask.png" width="250" /><img src="screenshots/editTask.png" width="250" /><img src="screenshots/completedTasks.png" width="250" />
 
+## Demo
+<img src="gifs/demo.gif" width="250">
+
 ## Requirement Definitions
 - Users should be able to perform CRUD operations on task items.
 - Users should be able mark a task item as complete.
