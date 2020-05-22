@@ -29,6 +29,24 @@ const sortByType = (tasks, sortType) => {
       return tasks.slice().sort((a, b) => a.dateCompleted - b.dateCompleted);
     case types.sort.byDateCompletedDesc:
       return tasks.slice().sort((a, b) => b.dateCompleted - a.dateCompleted);
+    case types.sort.byPriorityAsc:
+      return tasks.slice().sort((a, b) => {
+        const valueA =
+          a.priorityKey === null ? Number.MAX_SAFE_INTEGER : types.priority[a.priorityKey].value;
+        const valueB =
+          b.priorityKey === null ? Number.MAX_SAFE_INTEGER : types.priority[b.priorityKey].value;
+
+        return valueB - valueA;
+      });
+    case types.sort.byPriorityDesc:
+      return tasks.slice().sort((a, b) => {
+        const valueA =
+          a.priorityKey === null ? Number.MAX_SAFE_INTEGER : types.priority[a.priorityKey].value;
+        const valueB =
+          b.priorityKey === null ? Number.MAX_SAFE_INTEGER : types.priority[b.priorityKey].value;
+
+        return valueA - valueB;
+      });
     default:
       return tasks.slice();
   }
@@ -97,27 +115,18 @@ export default (state = initialState, action) => {
       let updatedCompletedTasks = null;
 
       if (action.isActiveList) {
-        updatedActiveTasks =
-          action.sortType === types.sort.byDueDateAsc
-            ? sortByType(state.activeTasks, types.sort.byDueDateAsc)
-            : sortByType(state.activeTasks, types.sort.byDueDateDesc);
-
+        updatedActiveTasks = sortByType(state.activeTasks, action.sortType);
         return {
           ...state,
           activeTasks: updatedActiveTasks,
-          lastActiveListSortType: action.sortType,
         };
       }
 
-      updatedCompletedTasks =
-        action.sortType === types.sort.byDateCompletedAsc
-          ? sortByType(state.completedTasks, types.sort.byDateCompletedAsc)
-          : sortByType(state.completedTasks, types.sort.byDateCompletedDesc);
+      updatedCompletedTasks = sortByType(state.activeTasks, action.sortType);
 
       return {
         ...state,
         completedTasks: updatedCompletedTasks,
-        lastCompletedListSortType: action.sortType,
       };
     }
     default:

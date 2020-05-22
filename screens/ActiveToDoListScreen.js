@@ -47,10 +47,10 @@ const ActiveToDoListScreen = (props) => {
             dispatch(taskActions.sortTasks(types.sort.byDueDateDesc, true));
             break;
           case 2:
-            console.log("sorting by highest priority");
+            dispatch(taskActions.sortTasks(types.sort.byPriorityDesc, true));
             break;
           case 3:
-            console.log("sorting by lowest priority");
+            dispatch(taskActions.sortTasks(types.sort.byPriorityAsc, true));
             break;
           default:
             break;

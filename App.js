@@ -36,10 +36,10 @@ export default function App() {
   }
 
   return (
-    <ActionSheetProvider>
-      <Provider store={store}>
+    <Provider store={store}>
+      <ActionSheetProvider>
         <RootNavigator />
-      </Provider>
-    </ActionSheetProvider>
+      </ActionSheetProvider>
+    </Provider>
   );
 }
