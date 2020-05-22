@@ -112,6 +112,7 @@ const EditToDoScreen = (props) => {
       setError("name", "minLength", "Name is required.");
       return;
     }
+    task.description = data.description ? data.description.trim().trimStart() : "";
     task.description = data.description.trim().trimStart();
     task.dueDate = dueDate;
     task.name = data.name.trim().trimStart();
